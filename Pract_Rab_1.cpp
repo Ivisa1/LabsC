@@ -70,5 +70,6 @@ int main(){
 			putchar(' ');
 		}
 	}
+	// комментарий
 	return 0;
 }
