@@ -61,26 +61,24 @@ int main(){
 
     /* Задание 4 - двоичное представление в памяти double */
 
-    union{ // объединение переменных
-        float numberDouble; // значение для представления
-        long long int numberIntForDouble; // переменная int, находящаяся в объединении с числом float
+    union // объединение int и double
+    {
+        double numberDouble; // число типа double
+        int numberIntForDouble[2]; // переменная int, находящаяся в объединении с числом float (2 штуки, т.к. в один инт double не вместить) 
     };
 
-    order = 64; // у числа типа double 64 разряда
-    mask = 1 << order -1; // маска для числа double
     cout << "Введите число типа double: ";
-    cin >> numberDouble; // ввод числа типа double
-    cout << "Ваше число типа double в двоичном виде: ";
-    // маска для int и float одинаковая
+    cin >> numberDouble;
 
-    for (int i = 1; i <= order; i++){ // вывод двоичного представления
-		putchar(numberIntForDouble & mask ? '1' : '0'); 
-		numberIntForDouble <<= 1; // Побитовый сдвиг числа
-		if (i % 8 == 0 || i == 1) // Разделение на байты (8 битов) или отделение знакового бита
-		{
-			putchar(' ');
-		}
-	}
+    for (int j = 1; j >= 0 ; j--){ // определяет, какой int брать
+        for (int i = 1; i <= 4 * 8; i++){
+            mask = 1 << order * 2 - i; // маска для double
+            putchar(numberIntForDouble[j] & mask ? '1' : '0');
+            if ((i == 1 && j == 1) || i % 8 == 0 && i != 0){ // Разделение на байты (8 битов) или отделение знакового бита
+                putchar(' ');
+            }
+        }
+    }
 
 	return 0;
 }
